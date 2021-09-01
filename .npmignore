@@ -4,5 +4,6 @@ __tests__
 .huskyrc
 .commitlint.config.js
 babel.config.js
+tsconfig.json
 logs
 src
