@@ -1,0 +1,11 @@
+{
+  "name": "logger",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@bristom/commitlint-config": "^1.0.2",
+    "@commitlint/cli": "^13.1.0",
+    "husky": "^4.3.5"
+  }
+}
