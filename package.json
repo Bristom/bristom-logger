@@ -1,11 +1,30 @@
 {
-  "name": "logger",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "devDependencies": {
-    "@bristom/commitlint-config": "^1.0.2",
-    "@commitlint/cli": "^13.1.0",
-    "husky": "^4.3.5"
-  }
+	"name": "@bristom/logger",
+	"version": "1.0.0",
+	"main": "dist/index.js",
+	"license": "MIT",
+	"scripts": {
+		"build": "babel src --extensions \".js,.ts\" --out-dir dist",
+		"test": "babel src --extensions \".js,.ts\" --out-dir dist && node __tests__/index.js"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.14.8",
+		"@babel/core": "^7.15.0",
+		"@babel/node": "^7.14.9",
+		"@babel/preset-env": "^7.15.0",
+		"@babel/preset-typescript": "^7.15.0",
+		"@bristom/commitlint-config": "^1.0.2",
+		"@commitlint/cli": "^13.1.0",
+		"@types/node": "^16.7.10",
+		"babel-plugin-module-resolver": "^4.1.0",
+		"husky": "^4.3.5",
+		"typescript": "^4.4.2"
+	},
+	"dependencies": {
+		"date-fns": "^2.23.0",
+		"winston": "^3.3.3"
+	},
+	"description": "Package to log pretty and comprehensive debug messages, warnings and errors of your app",
+	"repository": "https://github.com/Bristom/logger.git",
+	"author": "luk3skyw4lker <lucashenriqueblemos@gmail.com>"
 }
