@@ -17,64 +17,54 @@ type LogCallback = (
 	meta?: any
 ) => void;
 interface LeveledLogMethod {
-	(message: string, callback: LogCallback): Logger;
-	(message: string, meta: any, callback: LogCallback): Logger;
-	(message: string, ...meta: any[]): Logger;
-	(message: any): Logger;
-	(infoObject: object): Logger;
+	(message: string, callback: LogCallback): BaseLogger;
+	(message: string, meta: any, callback: LogCallback): BaseLogger;
+	(message: string, ...meta: any[]): BaseLogger;
+	(message: any): BaseLogger;
+	(infoObject: object): BaseLogger;
 }
 
-declare class Logger {
-	silent: boolean;
-	format: Logform.Format;
-	levels: Config.AbstractConfigSetLevels;
-	level: string;
-	transports: Transport[];
-	exceptions: ExceptionHandler;
-	profilers: object;
-	exitOnError: Function | boolean;
-	defaultMeta?: any;
+declare namespace Logger {
+	let silent: boolean;
+	let format: Logform.Format;
+	let levels: Config.AbstractConfigSetLevels;
+	let level: string;
+	let transports: Transport[];
+	let exceptions: ExceptionHandler;
+	let profilers: object;
+	let exitOnError: Function | boolean;
+	let defaultMeta: any;
 
 	// for cli and npm levels
-	error: LeveledLogMethod;
-	warn: LeveledLogMethod;
-	help: LeveledLogMethod;
-	data: LeveledLogMethod;
-	info: LeveledLogMethod;
-	debug: LeveledLogMethod;
-	prompt: LeveledLogMethod;
-	http: LeveledLogMethod;
-	verbose: LeveledLogMethod;
-	input: LeveledLogMethod;
-	silly: LeveledLogMethod;
+	let error: LeveledLogMethod;
+	let warn: LeveledLogMethod;
+	let help: LeveledLogMethod;
+	let data: LeveledLogMethod;
+	let info: LeveledLogMethod;
+	let debug: LeveledLogMethod;
+	let prompt: LeveledLogMethod;
+	let http: LeveledLogMethod;
+	let verbose: LeveledLogMethod;
+	let input: LeveledLogMethod;
+	let silly: LeveledLogMethod;
 
 	// for syslog levels only
-	emerg: LeveledLogMethod;
-	alert: LeveledLogMethod;
-	crit: LeveledLogMethod;
-	warning: LeveledLogMethod;
-	notice: LeveledLogMethod;
+	let emerg: LeveledLogMethod;
+	let alert: LeveledLogMethod;
+	let crit: LeveledLogMethod;
+	let warning: LeveledLogMethod;
+	let notice: LeveledLogMethod;
 
-	query(
+	let query: (
 		options?: QueryOptions,
 		callback?: (err: Error, results: any) => void
-	): any;
-	stream(options?: any): NodeJS.ReadableStream;
-
-	startTimer(): Profiler;
-	profile(id: string | number, meta?: LogEntry): BaseLogger;
-
-	configure(options: LoggerOptions): void;
-
-	child(options: Object): BaseLogger;
-
-	isLevelEnabled(level: string): boolean;
-	isErrorEnabled(): boolean;
-	isWarnEnabled(): boolean;
-	isInfoEnabled(): boolean;
-	isVerboseEnabled(): boolean;
-	isDebugEnabled(): boolean;
-	isSillyEnabled(): boolean;
-
-	new(options?: LoggerOptions): BaseLogger;
+	) => any;
+	let stream: (options?: any) => NodeJS.ReadableStream;
+	let add: (transport: Transport) => BaseLogger;
+	let remove: (transport: Transport) => BaseLogger;
+	let clear: () => BaseLogger;
+	let startTimer: () => Profiler;
+	let profile: (id: string | number) => BaseLogger;
+	let configure: (options: LoggerOptions) => void;
+	let child: (options: Object) => BaseLogger;
 }
