@@ -38,7 +38,7 @@ const custom = format((info, _opts) => {
 const Logger = winston.createLogger({
 	transports: [
 		new Console({
-			level: process.env.WINSTON_LEVEL,
+			level: 'debug',
 			format: winston.format.combine(custom(), winston.format.simple())
 		}),
 		new File({
