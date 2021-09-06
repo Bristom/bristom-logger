@@ -4,15 +4,29 @@ import { SPLAT } from 'triple-beam';
 import winston from 'winston';
 
 const { Console, File } = winston.transports;
-const { format } = winston;
+const {
+	format,
+	format: { combine, simple }
+} = winston;
+
+const formatSplat = (splat: string[]) => {
+	return splat
+		.map(value => {
+			if (typeof value === 'object') {
+				return JSON.stringify(value);
+			} else {
+				return String(value);
+			}
+		})
+		.join(' ');
+};
 
 // eslint-disable-next-line no-unused-vars
 const custom = format((info, _opts) => {
 	const date = dateFormat(new Date(), 'dd/MM HH:mm:ss');
+	const splat = info[SPLAT] ? formatSplat(info[SPLAT]) : [];
 
-	const message = info[SPLAT]
-		? `${info.message} ${info[SPLAT].join(' ')}`
-		: info.message;
+	const message = `${info.message} ${splat}`;
 
 	if (info.level === 'info') {
 		// Setting level to blue and message to green
@@ -38,11 +52,11 @@ const custom = format((info, _opts) => {
 const Logger = winston.createLogger({
 	transports: [
 		new Console({
-			level: 'debug',
-			format: winston.format.combine(custom(), winston.format.simple())
+			level: process.env.WINSTON_LEVEL || 'debug',
+			format: combine(custom(), simple())
 		}),
 		new File({
-			filename: 'logs/warn.log',
+			filename: 'logs/warn_errors.log',
 			level: 'warn',
 			format: winston.format.simple()
 		})
